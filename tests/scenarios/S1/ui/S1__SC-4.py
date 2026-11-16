@@ -3,7 +3,7 @@
 import json
 from asb_ui import page_session, screenshot
 
-with page_session() as (browser, page):
+with page_session() as (pw, browser, context, page):
     page.click('[data-testid="greet"]')
     page.wait_for_selector('[data-testid="greeting"]:not([hidden])')
     text = page.inner_text("body")
