@@ -1,24 +1,26 @@
 schemaVersion: 4
-rationale: deterministic env probe (python)
+rationale: Demo webapp with stdlib http.server; api and ui scenarios require service and preview
 components:
-- name: app
-  path: .
-  toolchain:
-    image: agentsphere/sandbox-polyglot
-    kind: python
-  verify:
-  - ruff check .
-  - pytest
-  artifacts_ignore: []
+  - name: app
+    path: .
+    toolchain:
+      image: agentsphere/sandbox-polyglot
+      kind: python
+    verify:
+      - ruff check .
+      - pytest --junitxml=.agentsphere/reports/junit.xml
+    artifacts_ignore: []
 definition_of_done:
-- ruff check . und pytest laufen ohne Fehler
-- GET /health antwortet auf Port 8099 (Dienst web)
+  - ruff check . und pytest laufen ohne Fehler
+  - GET /health antwortet auf Port 8099 (Dienst web)
 network:
   needs: []
 services:
-- name: web
-  start: python app.py
-  port: 8099
-  health:
-    http: /health
-    timeoutSec: 30
+  - name: web
+    start: python app.py
+    port: 8099
+    health:
+      http: /health
+      timeoutSec: 30
+    preview:
+      path: /
