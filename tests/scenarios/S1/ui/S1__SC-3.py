@@ -3,7 +3,7 @@
 import json
 from asb_ui import page_session, screenshot
 
-with page_session() as page:
+with page_session() as (browser, page):
     title = page.title()
     text = page.inner_text("body")
     headline_visible = page.is_visible('[data-testid="headline"]')
